@@ -1,0 +1,65 @@
+/* Main Elements*/
+
+header {
+    color: white;
+    background-color: #6A5ACD; /*slateblue*/
+    text-decoration: underline;
+    text-align: center;
+    display:block;
+}
+
+body {
+    background-color: lightcyan; 
+}
+
+main {
+    background-color: white;
+    padding: 16px;
+    border-left: #AFEEEE solid 2px;
+    border-right:#AFEEEE solid 2px;
+}
+
+/*Classes*/
+
+.post {
+    margin-bottom: 50px;
+    padding: 5px;
+}
+
+.post .user-info img {
+    border-radius: 65%;
+}
+
+a.photo {
+    border: #483D8B solid 2px;
+}
+
+.postBreak {
+    text-align: center;
+    font-family: 'Architects Daughter', cursive;
+    font-size: 35px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    
+}
+/*IDs*/
+
+#pageTitle {
+    text-align: center;
+}
+
+/* Psuedo Classes*/
+
+a:hover {
+    color:purple;
+    text-decoration: blink;
+}
+
+a:active {
+    color: maroon;
+} 
+    
+a:visited {
+    color:black;
+    font-weight: bold;
+}
