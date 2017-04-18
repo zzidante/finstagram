@@ -1,0 +1,23 @@
+<!doctype html>
+<!--All the information needed for EACH page goes in this page (specifically called layout.erb because of how Sinatra works)-->
+<html>
+    
+    <!--HEADER AREA-->
+    <head> 
+        <link rel="stylesheet" href="/stylesheets/normalize.css"> <!--changed CSS directory reference, removed ../../-->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald:300italic,700italic,700,300">
+        <link href="https://fonts.googleapis.com/css?family=Architects+Daughter" rel="stylesheet">
+        <link rel="stylesheet" href="/stylesheets/lib.css"> <!--changed CSS directory reference, removed ../../-->
+        <link rel="stylesheet" href="/stylesheets/myapp.css"> <!--changed CSS directory reference, removed ../../-->
+        <title>Finstagram</title>
+        <meta name="author" content="Melody Dante">
+        <meta name="description" content="A fun place to find aquatic photos!">
+        <link rel="shortcut icon" href="http://icons.iconarchive.com/icons/iconsmind/outline/128/Fish-icon.png" type="image/x-icon">
+    </head>
+    
+    <!--BODY AREA-->
+    <body> 
+      <%= yield %> <!--This is where the page content goes!-->
+    </body>
+    
+</html>

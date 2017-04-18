@@ -32,9 +32,9 @@ end
 
 get '/' do
     
-    post_shark = {
+    @post_shark = {
         username: "sharkey_j",
-        avatar_url: "http://naserca.com/images/sharkey_j.jpg",
+        avatar_url: "http://naserca.com/images/sharky_j.jpg",
         photo_url: "http://naserca.com/images/shark.jpg",
         humanized_time_ago: humanized_time_ago(15),
         like_count: 0,
@@ -46,7 +46,7 @@ get '/' do
     }
     
     
-    post_mass_fx = {
+    @post_mass_fx = {
         username: "Mass_FX",
         avatar_url: "https://i2.wp.com/ashraf62.files.wordpress.com/2014/09/king-tutankhamen.jpg?resize=40%2C40&ssl=1",
         photo_url: "http://www.masseffect-game.de/sites/www.masseffect-game.de/files/styles/media_gallery_thumbnail/public/me3_leviathan_20120803_04.jpg?itok=iPNecDgY",
@@ -59,7 +59,7 @@ get '/' do
         }]
     }
     
-     post_nervuspkmn = {
+     @post_nervuspkmn = {
         username: "NervusPKMN",
         avatar_url: "http://www.stylepoints.org/arrgh!/Themes/backnblack_204/images/pirate.gif",
         photo_url: "https://media-cdn.tripadvisor.com/media/photo-s/04/a8/a5/69/siam-ocean-world.jpg",
@@ -72,5 +72,10 @@ get '/' do
         }]
     }
     #humanized_time_ago(post[:time_ago_in_minutes])
-    [post_shark, post_mass_fx, post_nervuspkmn].to_s
+    [@post_shark, @post_mass_fx, @post_nervuspkmn].to_s
+
+
+    #calling erb method (built into Sinatra/Ruby) passing it a single argument erb(:index)
+    #single arguments can be called WITHOUT Methods(:argument) < symbol. Instead Methods:argument. 
+    erb:index 
 end
