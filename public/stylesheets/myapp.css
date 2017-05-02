@@ -30,10 +30,10 @@ main {
     border-radius: 65%;
 }
 
-a.photo {
+.photo {
     border: #483D8B solid 2px;
 }
-
+        
 .postBreak {
     text-align: center;
     font-family: 'Architects Daughter', cursive;
@@ -42,6 +42,11 @@ a.photo {
     letter-spacing: 2px;
     
 }
+
+#loginUsernameTitle {
+       display:inline-block;
+}
+
 /*IDs*/
 
 #pageTitle {

@@ -1,122 +1,55 @@
     <header>
             <h1 id="pageTitle"> Finstagram The Great!</h1>
+            
+            <div class = "login-info">
+                <% if current_user %>
+                    <span id = "loginUsernameTitle"><%=current_user.username.upcase%></span>
+                    <a href= "/logout">Logout</a>
+                    <% else %>
+                    <a href="/login">Login</a>
+                    <a href="/signup">Signup</a>
+                <% end %>
+            </div>
         </header>
         
         <!-- ...CONTENT AREA... -->
         <main role="main"> 
         
-<!-- POST ONE -- sharky_j-->
-            <article class="post">
-                        <!-- Post Photo -->
-                <div class="user-info">
-                    <img src ="<%= @post_shark[:avatar_url] %>" alt="<%= @post_shark[:username] %>">
-                    <h2><%=@post_shark[:username] %></h2>
-                    <h3><%=@post_shark[:humanized_time_ago] %></h3>
-                </div>
-                <a class="photo" href="#">
-                    <img src="<%= @post_shark[:photo_url] %>" alt="<%=@post_shark[:username] %>">
-                </a>
-                        <!-- Post Actions -->
-                <div class="actions"> 
-                <%= @post_shark[:like_count] %> likes <!--# of photo likes-->
-                <span class="comment-count"> <%=@post_shark[:comment_count] %> comments</span>
-                </div>
-                <ul class="comments">
-                    <li>
-                        <p>
-                            <%=@post_shark[:comments][0][:username] %>: <%= @post_shark [:comments][0][:text] %>
-                        </p>
-                    </li>
-                </ul>
-            </article>
-<!-- End Post One-->
-            <div class="postBreak">*** *** ***</div>
-        <br>    
-<!--Post TWO-- Mass_FX>-->
-            <article class="post">
-                        <!-- Post Photo -->
-                <div class="user-info">
-                    <img src ="<%= @post_mass_fx[:avatar_url] %>" alt="post from <%=@post_mass_fx[:username] %>">
-                    <h2><%=@post_mass_fx[:username] %></h2>
-                    <h3><%=@post_mass_fx[:humanized_time_ago] %></h3>
-                </div>
-                    <a class="photo" href="#">
-                        <img src="<%=@post_mass_fx[:photo_url] %>" alt ="post from <%=@post_mass_fx[:username] %>">
-                    </a>
-                        <!-- Post Actions -->
-                    <div class="actions">
-                        <%=@post_mass_fx[:like_count] %> likes
-                    <span class="comment-count"> <%=@post_mass_fx[:comment_count] %> comments</span>
-                    </div>
-                    <ul class="comments">
-                        <li>
-                            <p>
-                                <%= @post_mass_fx[:comments][0][:username]%>: <%= @post_mass_fx[:comments][0][:text]%>
-                            </p>
-                        </li>
-                    </ul>
-            </article>
-<!-- End Post Two-->
-             <div class="postBreak">*** *** ***</div>
-        <br>
-<!-- Post THREE NervusPKMN --> 
-            <article class="post">
-                    <!-- Post Photo -->
-                <div class ="user-info">
-                    <img src="<%=@post_nervuspkmn[:avatar_url] %>" alt ="post from <%=@post_nervuspkmn[:username] %>">
-                    <h2><%=@post_nervuspkmn[:username]%></h2>
-                    <h3>30 minutes ago</h3>
-                </div>
-                <a class="photo" href="#">
-                    <img src="https://media-cdn.tripadvisor.com/media/photo-s/04/a8/a5/69/siam-ocean-world.jpg" alt post="Dun Dun Duuhn Shark">
-                </a>
-                    <!-- Post Actions -->
-                <div class="actions">
-                        0 likes
-                    <span class="comment-count"> 0 comments </span>
-                </div>
-                <ul class ="comments">
-                    <li>
-                        <p>
-                            No images? Should I actually say something? 
-                        </p>
-                    </li>
-                </ul>
-            </article>
-<!-- End Post Three -->
-
-            <div class="postBreak">*** *** ***</div>
-        <br>
-       
-       <!-- Ommitted info   
-<!Post FOUR-- Kirk_Whalen>
-    <article class="post">
-        <div class="user-info">
-            <img src="http://naserca.com/images/whale.jpg" alt="post from Kirk_Whalen">
-            <h2>kirk_whalum</h2>
-            <h3>1 day ago</h3>
-        </div>
-        <a class='photo' href="#">
-            <img src="http://naserca.com/images/whale.jpg" alt="post from kirk_whalum">
-        </a>
-        <div class="actions">
-            0 likes
-            <span class="comment-count">0 comments</span>
-        </div>
-        <ul class="comments">
-            <li>
-                <p>
-                    kirk_whalum: #weekend vibes
-                </p>
-            </li>
-        </ul>
-    </article>
-
-<!End Post FOUR>
-            <div class="postBreak">*** *** ***</div>
-        <br>
--->
+    <% @posts.each do |post| %>
+         <article class="post">
+             <div class="user-info">
+                 <img src= "<%= post.user.avatar_url %>" alt="<%= post.user.username %>">
+                 <h2><%= post.user.username %></h2>
+                 <h3><%= post.humanized_time_ago %></h3>
+             </div>
+             <a class="photo" href="#">
+                 <img src="<%= post.photo_url %>" alt="post from <%= post.user.username %>">
+             </a>
+             <div class="actions">
+                <%= post.like_counts %> likes 
+                 <span class="comments-count"> . <%=post.comment_count %> comments</span>
+             </div>
+             <ul class="comments">
+                 <!--Ruby code for populating more comments -->
+                 <% post.comments.each do |comment| %>
+                 <li>
+                     <p>
+                         <%= comment.user.username %>: <%= comment.text %>
+                     </p>
+                 </li>
+                 <% end %>
+             </ul>
+         </article>   
+        <% end %>
+        
 <h4> To know more about Finstagram The Great's creator, visit her @ <a href="http://www.melodydanteandthemobverse.weebly.com" alt="MD Blog link">Melody Dante and the Mobverse</a>. </h4>
             
         </main>
-    
+        
+        
+        
+        
+        
+        
+        
+      

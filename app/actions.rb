@@ -1,4 +1,11 @@
 
+helpers do  
+    def current_user
+        User.find_by(id: session[:user_id])
+    end
+end
+
+#LOGIC BEHIND POST TIME_AGO_IN_MINUTES
 def humanized_time_ago(time_ago_in_minutes)
         
     #   and if it's exactly 60 minutes
@@ -9,7 +16,7 @@ def humanized_time_ago(time_ago_in_minutes)
         
         
     #   if time_ago_in_minutes is more than 60
-    elsif time_ago_in_minutes >= 120 
+    elsif time_ago_in_minutes >= 99 
     #   
     #   return this string
         "#{time_ago_in_minutes / 60} hours ago"
@@ -30,52 +37,64 @@ def humanized_time_ago(time_ago_in_minutes)
     end    
 end
 
+#ORDER POSTS BY POST DATE
 get '/' do
-    
-    @post_shark = {
-        username: "sharkey_j",
-        avatar_url: "http://naserca.com/images/sharky_j.jpg",
-        photo_url: "http://naserca.com/images/shark.jpg",
-        humanized_time_ago: humanized_time_ago(15),
-        like_count: 0,
-        comment_count: 1,
-        comments: [{
-            username: "sharkey_j",
-            text: "Out for the long weekend... too embarassed to show y'all the beach bod!"
-        }]
-    }
-    
-    
-    @post_mass_fx = {
-        username: "Mass_FX",
-        avatar_url: "https://i2.wp.com/ashraf62.files.wordpress.com/2014/09/king-tutankhamen.jpg?resize=40%2C40&ssl=1",
-        photo_url: "http://www.masseffect-game.de/sites/www.masseffect-game.de/files/styles/media_gallery_thumbnail/public/me3_leviathan_20120803_04.jpg?itok=iPNecDgY",
-        humanized_time_ago: humanized_time_ago(60),
-        like_count: 0,
-        comment_count: 0,
-        comments: [{
-            username: "Mass_FX",
-            text: "I sunk your battleship bro."
-        }]
-    }
-    
-     @post_nervuspkmn = {
-        username: "NervusPKMN",
-        avatar_url: "http://www.stylepoints.org/arrgh!/Themes/backnblack_204/images/pirate.gif",
-        photo_url: "https://media-cdn.tripadvisor.com/media/photo-s/04/a8/a5/69/siam-ocean-world.jpg",
-        humanized_time_ago: humanized_time_ago(100),
-        like_count: 0,
-        comment_count: 0,
-        comments: [{
-            username: "NervusPKMN",
-            text: "Should I really say something?"
-        }]
-    }
-    #humanized_time_ago(post[:time_ago_in_minutes])
-    [@post_shark, @post_mass_fx, @post_nervuspkmn].to_s
-
-
-    #calling erb method (built into Sinatra/Ruby) passing it a single argument erb(:index)
-    #single arguments can be called WITHOUT Methods(:argument) < symbol. Instead Methods:argument. 
-    erb:index 
+    @posts = Post.order(created_at: :desc)
+    erb(:index)
 end
+
+
+#CREATE NEW USER FROM FORM
+get '/signup' do
+    @user = User.new
+    erb(:signup)
+end
+
+#FORM LOGIC
+post '/signup' do  
+    #grab user input values from params
+    email = params[:email]
+    avatar_url = params[:avatar_url]
+    username = params[:username]
+    password = params[:password]
+
+    #instatiate and save a User
+    @user=User.new({ email: email, avatar_url: avatar_url, username: username, password: password })
+
+    if @user.save 
+        redirect to('/login')
+        
+    #redirect to login page
+     ###escape_html user.inspect
+    
+    else 
+    
+    #display error message
+        erb(:signup)   
+    end
+end
+
+get '/login' do    #When a GET request come into /login
+    erb(:login)     #render app/views/login.erb
+end
+
+post '/login' do    
+    username = params[:username] 
+    password = params[:password]
+    
+    user = User.find_by(username: username)  # 1.Find user by username
+    
+    if user && user.password == password #and the password matches
+        session[:user_id] = user.id
+            redirect to('/')
+        else
+            @error_message = "Login Failed :("
+            erb(:login)
+    end
+end
+
+get '/logout' do
+    session[:user_id] = nil
+    redirect to('/')
+end
+
