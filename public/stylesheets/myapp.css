@@ -43,15 +43,22 @@ main {
     
 }
 
-#loginUsernameTitle {
-       display:inline-block;
-}
 
 /*IDs*/
 
+#loginUsernameTitle {
+       display:inline-block;
+       float: left;
+       padding-left: 20px;
+       font-size: 18px;
+}
+
 #pageTitle {
     text-align: center;
+    font-size: 36px;
+    margin-bottom: 0px;
 }
+
 
 /* Psuedo Classes*/
 

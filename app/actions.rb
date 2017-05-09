@@ -98,3 +98,72 @@ get '/logout' do
     redirect to('/')
 end
 
+
+#
+#
+
+
+    #Displaying post form
+get '/posts/new' do 
+        @post = Post.new
+        erb(:"posts/new")
+end
+
+    #Process form submissions
+post '/posts' do
+    photo_url = params[:photo_url]
+    
+    #instantiate new Post
+    @post = Post.new({ photo_url: photo_url, user_id: current_user.id })
+    
+    #if @post validates, save
+    if @post.save
+        redirect(to('/'))
+    else
+        
+        #if it doesn't validate, print error message
+        erb(:"posts/new")
+    end
+end
+
+
+#seperate post page URL
+get '/posts/:id' do 
+    @post = Post.find (params[:id]) #find the post with the ID from the URL
+    # escape_html @post.inspect < < < Print info to screen (demo purpose)
+    erb(:"posts/show")   #render app/views/posts/show.erb 
+end
+
+post '/comments' do 
+    #points values from params to variables
+    text = params[:text]
+    post_id = params[:post_id]
+    
+    #instantiate a comment with those values & assign the comment to the 'current_user'
+    comment = Comment.new({text: text, post_id: post_id, user_id: current_user.id })
+    
+    #save the comment
+    comment.save
+    
+    #redirect back to whereever we came from
+    redirect(back)
+end
+
+
+post '/likes' do
+    post_id=params[:post_id]
+    
+    like = Like.new({ post_id: post_id, user_id: current_user.id }).save 
+    
+        #back is Sinatra Magic
+    redirect(back)
+end
+
+#
+#
+
+delete '/likes/:id' do
+    like = Like.find(params[:id]) 
+    like.destroy
+    redirect(back)
+end
